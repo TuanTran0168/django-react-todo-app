@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  django_todo_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: django_todo_dev
+    command: /bin/sh -c "tail -f /dev/null"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=todolist
+      - DB_USER=tuantran
+      - DB_PASSWORD=Admin@123
+      - DB_HOST=db
+
+  db:
+    image: postgres:17
+    container_name: postgres_todo_dev
+    restart: always
+    environment:
+      POSTGRES_DB: todolist
+      POSTGRES_USER: tuantran
+      POSTGRES_PASSWORD: Admin@123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
