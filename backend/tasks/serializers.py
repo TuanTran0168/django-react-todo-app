@@ -34,6 +34,12 @@ class BulkActionTasksSerializer(serializers.Serializer):
         help_text="List of task IDs"
     )
 
+class BulkDeleteResponseSerializer(serializers.Serializer):
+    deleted_count = serializers.IntegerField()
+    deleted_ids = serializers.ListField(
+        child=serializers.IntegerField()
+    )
+
 class UserSerializer(serializers.ModelSerializer):
     # id = serializers.IntegerField(source='pk', read_only=True)
 
