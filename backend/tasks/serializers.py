@@ -1,23 +1,31 @@
 from rest_framework import serializers
 from .models import Tasks, User
 
+BASE_FIELD = [
+    'created_date',
+    'updated_date',
+    'deleted_date',
+    'active',
+]
+
 
 class TasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
-        fields = [
-            'id',
-            'title',
-            'description',
-            'due_date',
-            'priority',
-            'is_done',
-            'created_date',
-            'updated_date',
-            'deleted_date',
-            'active',
-        ]
+        fields = ['id',
+                  'title',
+                  'description',
+                  'due_date',
+                  'priority',
+                  'is_done',
+                  ] + BASE_FIELD
         read_only_fields = ['id', 'created_date', 'updated_date']
+
+
+class CreateTasksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tasks
+        fields = ['title', 'description', 'due_date', 'priority', ]
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -31,7 +39,20 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
-            'phone_number',
-            'last_login'
+            'last_login',
+            'is_confirm',
         ]
         read_only_fields = ['id', 'username', 'email', 'last_login']
+
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)  # hash password
+        user.save()
+        return user
