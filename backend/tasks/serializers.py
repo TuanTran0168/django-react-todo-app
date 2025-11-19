@@ -27,6 +27,12 @@ class CreateTasksSerializer(serializers.ModelSerializer):
         model = Tasks
         fields = ['title', 'description', 'due_date', 'priority', ]
 
+class BulkActionTasksSerializer(serializers.Serializer):
+    ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        allow_empty=False,
+        help_text="List of task IDs"
+    )
 
 class UserSerializer(serializers.ModelSerializer):
     # id = serializers.IntegerField(source='pk', read_only=True)
