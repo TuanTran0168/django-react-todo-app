@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -39,8 +40,44 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'drf_spectacular',
     'tasks',
 ]
+
+PRODUCTION_URL = os.environ.get('PRODUCTION_URL', 'http://localhost:8888')
+
+# ===== Metadata for Swagger / OpenAPI =====
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'TodoList API',
+    'DESCRIPTION': 'API documentation for TodoList application. Manage tasks, users, and tasks priorities.',
+    'VERSION': '1.0.0',
+    'CONTACT': {
+        'name': 'Tran Dang Tuan',
+        'email': 'tuan@example.com',
+        'url': 'https://trandangtuan.com',
+    },
+    'LICENSE': {
+        'name': 'MIT License',
+        'url': 'https://opensource.org/licenses/MIT',
+    },
+    'SERVERS': [
+        {'url': 'http://localhost:8000', 'description': 'Local development server'},
+        {'url': PRODUCTION_URL, 'description': 'Production server'},
+    ],
+
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": True,
+    },
+    "SWAGGER_UI_DIST": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest",
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,8 +111,6 @@ WSGI_APPLICATION = 'todo_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-import os
 
 DATABASES = {
     'default': {
