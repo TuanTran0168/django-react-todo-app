@@ -60,10 +60,10 @@ SPECTACULAR_SETTINGS = {
         'name': 'MIT License',
         'url': 'https://opensource.org/licenses/MIT',
     },
-    'SERVERS': [
-        {'url': 'http://localhost:8000', 'description': 'Local development server'},
-        {'url': PRODUCTION_URL, 'description': 'Production server'},
-    ],
+    # 'SERVERS': [
+    #     {'url': 'http://localhost:8000', 'description': 'Local development server'},
+    #     {'url': PRODUCTION_URL, 'description': 'Production server'},
+    # ],
 
     "SWAGGER_UI_SETTINGS": {
         "deepLinking": True,
