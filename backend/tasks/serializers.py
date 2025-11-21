@@ -27,6 +27,13 @@ class CreateTasksSerializer(serializers.ModelSerializer):
         model = Tasks
         fields = ['title', 'description', 'due_date', 'priority', ]
 
+
+class UpdateTasksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tasks
+        fields = ['title', 'description', 'due_date', 'priority', 'is_done', ]
+
+
 class BulkActionTasksSerializer(serializers.Serializer):
     ids = serializers.ListField(
         child=serializers.IntegerField(),
@@ -34,11 +41,13 @@ class BulkActionTasksSerializer(serializers.Serializer):
         help_text="List of task IDs"
     )
 
+
 class BulkDeleteResponseSerializer(serializers.Serializer):
     deleted_count = serializers.IntegerField()
     deleted_ids = serializers.ListField(
         child=serializers.IntegerField()
     )
+
 
 class UserSerializer(serializers.ModelSerializer):
     # id = serializers.IntegerField(source='pk', read_only=True)
