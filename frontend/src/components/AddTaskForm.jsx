@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 export default function AddTaskForm({ onTaskAdded }) {
     const today = format(new Date(), "yyyy-MM-dd");
-    
+
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -22,23 +22,24 @@ export default function AddTaskForm({ onTaskAdded }) {
         e.preventDefault();
         if (!formData.title) return alert("Task title is required");
 
+        const dataToSend = {
+            title: formData.title,
+            description: formData.description,
+            due_date: formData.dueDate,
+            priority: formData.priority,
+        };
         try {
-            await API.post(endpoints.tasks, {
-                title: formData.title,
-                description: formData.description,
-                due_date: formData.dueDate,
-                priority: formData.priority,
-            });
-            
+            await API.post(endpoints.tasks, dataToSend);
+
             setFormData({
                 title: "",
                 description: "",
                 dueDate: today,
                 priority: "Normal",
             });
-            onTaskAdded(); 
+            onTaskAdded();
         } catch (error) {
-            console.error("Error adding task:", error);
+            console.error("Error adding task:", error.response.data);
             alert("Failed to add task");
         }
     };
@@ -46,7 +47,7 @@ export default function AddTaskForm({ onTaskAdded }) {
     return (
         <div className="h-full flex flex-col">
             <h2 className="text-center font-bold text-xl mb-10">New Task</h2>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6 flex-1">
                 {/* Title Input */}
                 <div>
@@ -63,7 +64,9 @@ export default function AddTaskForm({ onTaskAdded }) {
 
                 {/* Description Input */}
                 <div className="flex flex-col">
-                    <label className="font-bold text-sm mb-2">Description</label>
+                    <label className="font-bold text-sm mb-2">
+                        Description
+                    </label>
                     <textarea
                         name="description"
                         value={formData.description}
@@ -75,7 +78,9 @@ export default function AddTaskForm({ onTaskAdded }) {
                 {/* Due Date & Priority Row */}
                 <div className="flex gap-6">
                     <div className="flex-1">
-                        <label className="font-bold text-sm mb-2 block">Due Date</label>
+                        <label className="font-bold text-sm mb-2 block">
+                            Due Date
+                        </label>
                         <div className="relative">
                             <input
                                 type="date"
@@ -88,7 +93,9 @@ export default function AddTaskForm({ onTaskAdded }) {
                         </div>
                     </div>
                     <div className="flex-1">
-                        <label className="font-bold text-sm mb-2 block">Priority</label>
+                        <label className="font-bold text-sm mb-2 block">
+                            Priority
+                        </label>
                         <select
                             name="priority"
                             value={formData.priority}
