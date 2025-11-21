@@ -14,21 +14,21 @@ class BaseModel(models.Model):
 
 class Tasks(BaseModel):
     PRIORITY_CHOICES = [
-        ('TODO', 'To Do'),
-        ('IN_PROGRESS', 'In Progress'),
-        ('DONE', 'Done'),
+        ('Low', 'Low'),
+        ('Normal', 'Normal'),
+        ('High', 'High'),
     ]
     title = models.CharField(max_length=255, blank=False, null=False)
     description = models.TextField(blank=True)
     due_date = models.DateField(default=timezone.localdate)
-    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='TODO')
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='Low')
     is_done = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
 
-    class Meta(BaseModel.Meta):
-        ordering = ['due_date', 'id']
+    class Meta:
+        ordering = ['due_date', '-id']
 
 
 class User(AbstractUser):
