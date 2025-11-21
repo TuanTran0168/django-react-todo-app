@@ -17,6 +17,9 @@ export default function TodoPage() {
     const [nextPageUrl, setNextPageUrl] = useState(null);
     const [prevPageUrl, setPrevPageUrl] = useState(null);
 
+    const [isDoneFilter, setIsDoneFilter] = useState("");
+    const [priorityFilter, setPriorityFilter] = useState("");
+
     const fetchTasks = useCallback(async () => {
         try {
             setLoading(true);
@@ -26,6 +29,13 @@ export default function TodoPage() {
                 page_size: pageSize,
                 search: search,
             });
+
+            if (isDoneFilter !== "") {
+                params.append("is_done", isDoneFilter);
+            }
+            if (priorityFilter !== "") {
+                params.append("priority", priorityFilter);
+            }
 
             const response = await API.get(
                 `${endpoints.tasks}?${params.toString()}`
@@ -47,7 +57,7 @@ export default function TodoPage() {
         } finally {
             setLoading(false);
         }
-    }, [currentPage, pageSize, search]);
+    }, [currentPage, pageSize, search, isDoneFilter, priorityFilter]);
 
     useEffect(() => {
         fetchTasks();
@@ -70,6 +80,16 @@ export default function TodoPage() {
         setCurrentPage(1);
     };
 
+    const handleIsDoneFilterChange = (val) => {
+        setIsDoneFilter(val);
+        setCurrentPage(1);
+    };
+
+    const handlePriorityFilterChange = (val) => {
+        setPriorityFilter(val);
+        setCurrentPage(1);
+    };
+
     const handleTaskAdded = () => {
         setCurrentPage(1);
         setSearch("");
@@ -78,14 +98,14 @@ export default function TodoPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 p-10 flex justify-center items-start font-sans">
-            <div className="w-full max-w-7xl h-[750px] bg-white border-2 border-black flex flex-col md:flex-row shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div className="w-full max-w-7xl h-[860px] bg-white border-2 border-black flex flex-col md:flex-row shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                 {/* Left Column: Add Task */}
                 <div className="w-full md:w-[450px] border-b-2 md:border-b-0 md:border-r-2 border-black p-8 overflow-y-auto">
                     <AddTaskForm onTaskAdded={handleTaskAdded} />
                 </div>
 
                 {/* Right Column: Task List & Controls */}
-                <div className="w-full md:w-[600px] p-8 flex flex-col h-full">
+                <div className="w-full md:w-[620px] p-8 flex flex-col h-full">
                     <div className="flex-grow flex flex-col min-h-0">
                         <TaskList
                             tasks={tasks}
@@ -93,6 +113,10 @@ export default function TodoPage() {
                             onRefresh={fetchTasks}
                             search={search}
                             setSearch={handleSearchChange}
+                            isDoneFilter={isDoneFilter}
+                            setIsDoneFilter={handleIsDoneFilterChange}
+                            priorityFilter={priorityFilter}
+                            setPriorityFilter={handlePriorityFilterChange}
                         />
                     </div>
 

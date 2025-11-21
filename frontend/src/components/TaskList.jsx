@@ -9,6 +9,10 @@ export default function TaskList({
     onRefresh,
     search,
     setSearch,
+    isDoneFilter,
+    setIsDoneFilter,
+    priorityFilter,
+    setPriorityFilter,
 }) {
     const [selectedIds, setSelectedIds] = useState([]);
 
@@ -16,6 +20,15 @@ export default function TaskList({
         setSelectedIds((prev) =>
             prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
         );
+    };
+
+    const handleSelectAll = () => {
+        const allIds = tasks.map((task) => task.id);
+        setSelectedIds(allIds);
+    };
+
+    const handleDeselectAll = () => {
+        setSelectedIds([]);
     };
 
     const handleBulkDone = async () => {
@@ -64,15 +77,67 @@ export default function TaskList({
         <div className="flex flex-col h-full relative">
             <h2 className="text-center font-bold text-xl mb-6">To Do List</h2>
 
-            <div className="mb-4">
+            <div className="mb-4 flex gap-3">
                 <input
                     type="text"
                     placeholder="Search all tasks..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                    className="flex-1 p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
                 />
+
+                {/* Is Done Filter */}
+                <select
+                    value={isDoneFilter}
+                    onChange={(e) => setIsDoneFilter(e.target.value)}
+                    className="p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                >
+                    <option value="">Status: All</option>
+                    <option value="false">Todo</option>
+                    <option value="true">Done</option>
+                </select>
+
+                {/* Priority Filter */}
+                <select
+                    value={priorityFilter}
+                    onChange={(e) => setPriorityFilter(e.target.value)}
+                    className="p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                >
+                    <option value="">Priority: All</option>
+                    <option value="Low">Low</option>
+                    <option value="Normal">Normal</option>
+                    <option value="High">High</option>
+                </select>
             </div>
+
+            {tasks.length > 0 && (
+                <div className="flex justify-end gap-3 mb-2">
+                    <button
+                        onClick={handleSelectAll}
+                        disabled={selectedIds.length === tasks.length}
+                        className={`text-sm text-blue-600 font-medium transition-colors p-1 
+                            ${
+                                selectedIds.length === tasks.length
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:text-blue-800"
+                            }`}
+                    >
+                        Select All ({tasks.length})
+                    </button>
+                    <button
+                        onClick={handleDeselectAll}
+                        disabled={selectedIds.length === 0}
+                        className={`text-sm text-gray-600 font-medium transition-colors p-1 
+                            ${
+                                selectedIds.length === 0
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:text-gray-800"
+                            }`}
+                    >
+                        Deselect All ({selectedIds.length})
+                    </button>
+                </div>
+            )}
 
             <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 border-t border-gray-100 pt-2 min-h-[300px]">
                 {loading ? (
@@ -81,8 +146,8 @@ export default function TaskList({
                     </div>
                 ) : tasks.length === 0 ? (
                     <div className="text-center py-10 text-gray-400">
-                        {search
-                            ? "No tasks match your search."
+                        {search || isDoneFilter || priorityFilter
+                            ? "No tasks match your filter criteria."
                             : "No tasks found."}
                     </div>
                 ) : (
