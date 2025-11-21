@@ -1,0 +1,4 @@
+.task-item {
+    border: 1px solid #000; /* Viền đen theo mockup */
+    transition: all 0.2s;
+}
