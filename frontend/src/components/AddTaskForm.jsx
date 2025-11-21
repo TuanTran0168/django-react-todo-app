@@ -44,77 +44,77 @@ export default function AddTaskForm({ onTaskAdded }) {
         }
     };
 
+    const inputStyle = "w-full p-3 bg-white rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow shadow-inner";
+
     return (
         <div className="h-full flex flex-col">
-            <h2 className="text-center font-bold text-xl mb-10">New Task</h2>
+            <h2 className="text-center font-bold text-2xl mb-8 text-gray-800">
+                New Task
+            </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6 flex-1">
-                {/* Title Input */}
                 <div>
                     <input
                         type="text"
                         name="title"
-                        placeholder="Add new task ..."
+                        placeholder="Task title (required)"
                         value={formData.title}
                         onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                        className={inputStyle}
                         required
                     />
                 </div>
-
-                {/* Description Input */}
-                <div className="flex flex-col">
-                    <label className="font-bold text-sm mb-2">
-                        Description
-                    </label>
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        className="w-full p-3 border border-gray-300 rounded h-40 resize-none focus:outline-none focus:border-black"
-                    />
-                </div>
-
-                {/* Due Date & Priority Row */}
-                <div className="flex gap-6">
-                    <div className="flex-1">
-                        <label className="font-bold text-sm mb-2 block">
-                            Due Date
+                
+                <div className="bg-gray-50/70 border border-gray-100 rounded-xl p-4 space-y-4 shadow-sm">
+                    <div className="flex flex-col">
+                        <label className="font-semibold text-sm mb-2 text-gray-600">
+                            Description
                         </label>
-                        <div className="relative">
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            className={`${inputStyle} h-32 resize-none`}
+                        />
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex-1">
+                            <label className="font-semibold text-sm mb-2 block text-gray-600">
+                                Due Date
+                            </label>
                             <input
                                 type="date"
                                 name="dueDate"
                                 min={today}
                                 value={formData.dueDate}
                                 onChange={handleChange}
-                                className="w-full p-3 border border-gray-300 rounded pr-2"
+                                className={inputStyle}
                             />
                         </div>
-                    </div>
-                    <div className="flex-1">
-                        <label className="font-bold text-sm mb-2 block">
-                            Priority
-                        </label>
-                        <select
-                            name="priority"
-                            value={formData.priority}
-                            onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded bg-white cursor-pointer"
-                        >
-                            <option value="Low">Low</option>
-                            <option value="Normal">Normal</option>
-                            <option value="High">High</option>
-                        </select>
+                        <div className="flex-1">
+                            <label className="font-semibold text-sm mb-2 block text-gray-600">
+                                Priority
+                            </label>
+                            <select
+                                name="priority"
+                                value={formData.priority}
+                                onChange={handleChange}
+                                className={`${inputStyle} cursor-pointer`}
+                            >
+                                <option value="Low">Low</option>
+                                <option value="Normal">Normal</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                {/* Add Button */}
                 <button
                     type="submit"
-                    className="w-full bg-[#5cb85c] hover:bg-[#4cae4c] text-white font-bold py-3 px-4 rounded mt-8 transition-colors shadow-sm"
+                    className="w-full bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl mt-8 transition-all shadow-lg hover:shadow-xl active:shadow-md"
                 >
-                    Add
+                    Add Task
                 </button>
             </form>
         </div>

@@ -31,57 +31,65 @@ export default function TaskDetail({ task, onUpdate }) {
         }
     };
 
+    const inputStyle = "w-full p-2 bg-white rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow shadow-inner";
+
+
     return (
-        <div className="task-detail-container space-y-3">
-             <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-            />
-
-            <div className="flex flex-col">
-                <label className="font-bold text-sm mb-1">Description</label>
-                <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded h-24 resize-none"
-                />
-            </div>
-
-            <div className="flex gap-4">
-                <div className="flex-1">
-                    <label className="font-bold text-sm mb-1 block">Due Date</label>
+        <div className="task-detail-container space-y-4">
+            <div className="bg-gray-50/70 border border-gray-100 rounded-xl p-4 space-y-4 shadow-sm">
+                <div className="flex flex-col">
+                    <label className="font-bold text-sm mb-1 text-gray-700">Title</label>
                     <input
-                        type="date"
-                        name="dueDate"
-                        value={formData.dueDate}
+                        type="text"
+                        name="title"
+                        value={formData.title}
                         onChange={handleChange}
-                        className="w-full p-2 border border-gray-300 rounded"
+                        className={inputStyle}
                     />
                 </div>
-                <div className="flex-1">
-                    <label className="font-bold text-sm mb-1 block">Priority</label>
-                    <select
-                        name="priority"
-                        value={formData.priority}
+
+                <div className="flex flex-col">
+                    <label className="font-bold text-sm mb-1 text-gray-700">Description</label>
+                    <textarea
+                        name="description"
+                        value={formData.description}
                         onChange={handleChange}
-                        className="w-full p-2 border border-gray-300 rounded bg-white"
-                    >
-                        <option value="Low">Low</option>
-                        <option value="Normal">Normal</option>
-                        <option value="High">High</option>
-                    </select>
+                        className={`${inputStyle} h-24 resize-none`}
+                    />
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                        <label className="font-bold text-sm mb-1 block text-gray-700">Due Date</label>
+                        <input
+                            type="date"
+                            name="dueDate"
+                            value={formData.dueDate}
+                            onChange={handleChange}
+                            className={inputStyle}
+                        />
+                    </div>
+                    <div className="flex-1">
+                        <label className="font-bold text-sm mb-1 block text-gray-700">Priority</label>
+                        <select
+                            name="priority"
+                            value={formData.priority}
+                            onChange={handleChange}
+                            className={`${inputStyle} cursor-pointer`}
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Normal">Normal</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <button
                 onClick={handleUpdate}
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors"
+                className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition-colors shadow-md hover:shadow-lg"
             >
-                Update
+                Update Task
             </button>
         </div>
     );

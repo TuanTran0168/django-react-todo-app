@@ -73,35 +73,37 @@ export default function TaskList({
         }
     };
 
+    const inputStyle = "p-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-shadow shadow-inner cursor-pointer";
+
     return (
         <div className="flex flex-col h-full relative">
-            <h2 className="text-center font-bold text-xl mb-6">To Do List</h2>
+            <h2 className="text-center font-bold text-2xl mb-6 text-gray-800">
+                To Do List
+            </h2>
 
-            <div className="mb-4 flex gap-3">
+            <div className="mb-4 flex gap-3 flex-wrap sm:flex-nowrap">
                 <input
                     type="text"
                     placeholder="Search all tasks..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="flex-1 p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                    className={`flex-1 min-w-full sm:min-w-0 ${inputStyle}`}
                 />
 
-                {/* Is Done Filter */}
                 <select
                     value={isDoneFilter}
                     onChange={(e) => setIsDoneFilter(e.target.value)}
-                    className="p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                    className={`${inputStyle}`}
                 >
                     <option value="">Status: All</option>
                     <option value="false">Todo</option>
                     <option value="true">Done</option>
                 </select>
 
-                {/* Priority Filter */}
                 <select
                     value={priorityFilter}
                     onChange={(e) => setPriorityFilter(e.target.value)}
-                    className="p-3 border border-gray-300 rounded focus:outline-none focus:border-black transition-colors"
+                    className={`${inputStyle}`}
                 >
                     <option value="">Priority: All</option>
                     <option value="Low">Low</option>
@@ -111,15 +113,15 @@ export default function TaskList({
             </div>
 
             {tasks.length > 0 && (
-                <div className="flex justify-end gap-3 mb-2">
+                <div className="flex justify-end gap-4 mb-2">
                     <button
                         onClick={handleSelectAll}
                         disabled={selectedIds.length === tasks.length}
-                        className={`text-sm text-blue-600 font-medium transition-colors p-1 
+                        className={`text-sm text-indigo-600 font-semibold transition-colors p-1 hover:text-indigo-800
                             ${
                                 selectedIds.length === tasks.length
                                     ? "opacity-50 cursor-not-allowed"
-                                    : "hover:text-blue-800"
+                                    : "hover:text-indigo-800"
                             }`}
                     >
                         Select All ({tasks.length})
@@ -127,7 +129,7 @@ export default function TaskList({
                     <button
                         onClick={handleDeselectAll}
                         disabled={selectedIds.length === 0}
-                        className={`text-sm text-gray-600 font-medium transition-colors p-1 
+                        className={`text-sm text-gray-600 font-semibold transition-colors p-1 hover:text-gray-800
                             ${
                                 selectedIds.length === 0
                                     ? "opacity-50 cursor-not-allowed"
@@ -166,28 +168,28 @@ export default function TaskList({
             </div>
 
             {selectedIds.length > 0 && (
-                <div className="mt-4 bg-gray-100 border border-gray-300 rounded-md p-4 flex justify-between items-center animate-fade-in-up">
-                    <span className="text-gray-800 font-bold text-sm">
+                <div className="mt-4 bg-white border border-gray-200 rounded-xl p-4 flex flex-wrap justify-between items-center gap-3 shadow-lg animate-fade-in-up">
+                    <span className="text-gray-800 font-bold text-sm shrink-0">
                         {selectedIds.length} Selected
                     </span>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 flex-1 justify-end">
                         <button
                             onClick={() => setSelectedIds([])}
-                            className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-colors"
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors"
                         >
                             Clear
                         </button>
 
                         <button
                             onClick={handleBulkDone}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-colors"
+                            className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors"
                         >
                             Mark Done
                         </button>
 
                         <button
                             onClick={handleBulkRemove}
-                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-colors"
+                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-colors"
                         >
                             Remove
                         </button>

@@ -97,15 +97,14 @@ export default function TodoPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 p-10 flex justify-center items-start font-sans">
-            <div className="w-full max-w-7xl h-[860px] bg-white border-2 border-black flex flex-col md:flex-row shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                {/* Left Column: Add Task */}
-                <div className="w-full md:w-[450px] border-b-2 md:border-b-0 md:border-r-2 border-black p-8 overflow-y-auto">
+        <div className="min-h-screen bg-gray-50 p-4 md:p-10 flex justify-center items-start font-sans">
+            <div className="w-full max-w-7xl min-h-screen md:min-h-[80vh] md:h-[860px] bg-white flex flex-col md:flex-row shadow-2xl rounded-3xl overflow-hidden">
+                
+                <div className="w-full md:w-[450px] border-b border-gray-200 md:border-b-0 md:border-r border-gray-200 p-6 md:p-8 overflow-y-auto">
                     <AddTaskForm onTaskAdded={handleTaskAdded} />
                 </div>
 
-                {/* Right Column: Task List & Controls */}
-                <div className="w-full md:w-[620px] p-8 flex flex-col h-full">
+                <div className="w-full md:w-[620px] p-6 md:p-8 flex flex-col h-full">
                     <div className="flex-grow flex flex-col min-h-0">
                         <TaskList
                             tasks={tasks}
@@ -120,7 +119,7 @@ export default function TodoPage() {
                         />
                     </div>
 
-                    <div className="mt-4 pt-4 border-t-2 border-gray-100 flex flex-wrap justify-between items-center gap-4 shrink-0">
+                    <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap justify-between items-center gap-4 shrink-0">
                         <div className="flex items-center gap-4 text-sm text-gray-600">
                             <span>
                                 Total: <b>{totalCount}</b>
@@ -132,7 +131,7 @@ export default function TodoPage() {
                                     id="pageSize"
                                     value={pageSize}
                                     onChange={handlePageSizeChange}
-                                    className="border border-gray-300 rounded p-1 cursor-pointer hover:border-black focus:outline-none bg-white"
+                                    className="border border-gray-300 rounded-md p-1 cursor-pointer hover:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-white"
                                 >
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -145,29 +144,29 @@ export default function TodoPage() {
                             <button
                                 onClick={handlePrev}
                                 disabled={!prevPageUrl || loading}
-                                className={`px-4 py-2 border-2 border-black font-bold text-sm transition-colors
+                                className={`px-4 py-2 border border-gray-300 rounded-lg font-semibold text-sm transition-colors
                                     ${
                                         !prevPageUrl
-                                            ? "opacity-30 cursor-not-allowed bg-gray-100 border-gray-300"
-                                            : "hover:bg-black hover:text-white active:translate-y-1"
+                                            ? "opacity-50 cursor-not-allowed bg-gray-100 text-gray-500"
+                                            : "text-gray-700 hover:bg-gray-100 active:bg-gray-200"
                                     }
                                 `}
                             >
                                 Prev
                             </button>
 
-                            <span className="font-mono font-bold mx-2 w-16 text-center">
+                            <span className="font-mono font-bold mx-2 w-16 text-center text-gray-800">
                                 Page {currentPage}
                             </span>
 
                             <button
                                 onClick={handleNext}
                                 disabled={!nextPageUrl || loading}
-                                className={`px-4 py-2 border-2 border-black font-bold text-sm transition-colors
+                                className={`px-4 py-2 border border-gray-300 rounded-lg font-semibold text-sm transition-colors
                                     ${
                                         !nextPageUrl
-                                            ? "opacity-30 cursor-not-allowed bg-gray-100 border-gray-300"
-                                            : "hover:bg-black hover:text-white active:translate-y-1"
+                                            ? "opacity-50 cursor-not-allowed bg-gray-100 text-gray-500"
+                                            : "text-gray-700 hover:bg-gray-100 active:bg-gray-200"
                                     }
                                 `}
                             >
