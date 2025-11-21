@@ -31,12 +31,13 @@ export default function TaskItem({ task, isSelected, onToggleSelect, onRefresh }
         }
     };
 
+    // Task Item container style update: Soft shadow, rounded corners.
     const containerStyle = task.is_done 
-        ? "border-green-300 bg-green-50 hover:shadow-sm" 
-        : "border-black bg-white hover:shadow-md";
+        ? "bg-green-50 shadow-md" // Done tasks are lighter green, subtle shadow
+        : "bg-white shadow-md hover:shadow-xl"; // Todo tasks are white, more pronounced hover shadow for iOS feel
 
     const titleStyle = task.is_done 
-        ? "text-gray-400" 
+        ? "text-gray-400 line-through" 
         : "text-gray-800";
         
     const statusText = task.is_done ? "✅ Done" : "⏳ Todo";
@@ -51,12 +52,12 @@ export default function TaskItem({ task, isSelected, onToggleSelect, onRefresh }
     }
 
     return (
-        <div className={`border p-4 transition-all ${containerStyle}`}>
+        <div className={`p-4 transition-all rounded-xl ${containerStyle}`}>
             <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                     <input
                         type="checkbox"
-                        className="w-5 h-5 cursor-pointer accent-black"
+                        className="w-5 h-5 cursor-pointer accent-indigo-500"
                         checked={isSelected}
                         onChange={() => onToggleSelect(task.id)}
                     />
@@ -69,7 +70,7 @@ export default function TaskItem({ task, isSelected, onToggleSelect, onRefresh }
                         </span>
                         
                         <div className="flex gap-3 items-center text-xs mt-1">
-                            <span className="font-bold text-gray-500">
+                            <span className="font-semibold text-gray-500">
                                 {statusText}
                             </span>
                             
@@ -91,13 +92,13 @@ export default function TaskItem({ task, isSelected, onToggleSelect, onRefresh }
                 <div className="flex gap-2 shrink-0">
                     <button
                         onClick={() => setShowDetail(!showDetail)}
-                        className="bg-[#00BCD4] hover:bg-[#00ACC1] text-white px-6 py-1.5 rounded text-sm font-medium min-w-[90px] transition-colors"
+                        className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold min-w-[90px] transition-colors"
                     >
                         Detail
                     </button>
                     <button
                         onClick={handleRemove}
-                        className="bg-[#d9534f] hover:bg-[#c9302c] text-white px-6 py-1.5 rounded text-sm font-medium min-w-[90px] transition-colors"
+                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold min-w-[90px] transition-colors"
                     >
                         Remove
                     </button>
