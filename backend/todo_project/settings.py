@@ -103,6 +103,7 @@ LOGGING = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://react-todo-app-omega.vercel.app"
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'tasks.middlewares.rate_limit_middleware.RateLimitMiddleware',
 ]
 
 ROOT_URLCONF = 'todo_project.urls'
