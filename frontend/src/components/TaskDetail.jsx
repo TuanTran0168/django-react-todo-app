@@ -28,6 +28,10 @@ export default function TaskDetail({ task, onUpdate }) {
         } catch (error) {
             console.error(error);
             toast.error("Failed to update task");
+
+            if (error.response.status === 429 && error.response.data.detail) {
+                toast.error(error.response.data.detail);
+            }
         }
     };
 

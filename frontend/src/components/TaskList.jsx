@@ -43,6 +43,10 @@ export default function TaskList({
         } catch (error) {
             console.error(error);
             toast.error("Failed to mark tasks as done.");
+
+            if (error.response.status === 429 && error.response.data.detail) {
+                toast.error(error.response.data.detail);
+            }
         }
     };
 
@@ -70,6 +74,10 @@ export default function TaskList({
             } catch (e) {
                 console.error(e);
                 toast.error("Bulk delete failed entirely.");
+
+                if (error.response.status === 429 && error.response.data.detail) {
+                    toast.error(error.response.data.detail);
+                }
             }
         }
     };
