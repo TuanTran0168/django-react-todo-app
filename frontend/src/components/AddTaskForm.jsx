@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import API from "../services/api";
 import { endpoints } from "../services/endpoints";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 
 export default function AddTaskForm({ onTaskAdded }) {
     const today = format(new Date(), "yyyy-MM-dd");
@@ -20,7 +21,7 @@ export default function AddTaskForm({ onTaskAdded }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.title) return alert("Task title is required");
+        if (!formData.title) return toast.error("Task title is required");
 
         const dataToSend = {
             title: formData.title,
@@ -37,9 +38,10 @@ export default function AddTaskForm({ onTaskAdded }) {
                 priority: "Normal",
             });
             onTaskAdded();
+            toast.success("Task created successfully! 🎉");
         } catch (error) {
             console.error("Error adding task:", error.response.data);
-            alert("Failed to add task");
+            toast.error("Failed to add task");
         }
     };
 

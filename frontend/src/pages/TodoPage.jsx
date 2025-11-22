@@ -3,6 +3,8 @@ import API from "../services/api";
 import { endpoints } from "../services/endpoints";
 import AddTaskForm from "../components/AddTaskForm";
 import TaskList from "../components/TaskList";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TodoPage() {
     const [tasks, setTasks] = useState([]);
@@ -93,6 +95,8 @@ export default function TodoPage() {
 
     return (
         <div className="min-h-screen bg-gray-100 p-4 md:p-10 flex justify-center items-start font-sans text-slate-800">
+            <ToastContainer position="top-right" autoClose={3000} />
+
             <div className="w-full max-w-7xl min-h-screen md:min-h-[80vh] md:h-[860px] bg-white flex flex-col md:flex-row shadow-2xl rounded-3xl overflow-hidden ring-1 ring-black/5">
                 {/* Left Column */}
                 <div className="w-full md:w-[450px] border-b border-gray-100 md:border-b-0 md:border-r border-gray-100 p-6 md:p-8 overflow-y-auto bg-white">

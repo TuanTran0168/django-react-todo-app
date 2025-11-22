@@ -3,6 +3,7 @@ import API from "../services/api";
 import { endpoints } from "../services/endpoints";
 import "./TaskDetail.css";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 
 export default function TaskDetail({ task, onUpdate }) {
     const today = format(new Date(), "yyyy-MM-dd");
@@ -23,9 +24,10 @@ export default function TaskDetail({ task, onUpdate }) {
         try {
             await API.patch(`${endpoints.tasks}${task.id}/`, formData);
             onUpdate();
+            toast.success("Task updated successfully!"); 
         } catch (error) {
             console.error(error);
-            alert("Failed to update");
+            toast.error("Failed to update task");
         }
     };
 
