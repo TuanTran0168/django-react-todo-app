@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TaskItem from "./TaskItem";
 import API from "../services/api";
 import { endpoints } from "../services/endpoints";
+import { toast } from "react-toastify";
 
 export default function TaskList({
     tasks,
@@ -35,11 +36,13 @@ export default function TaskList({
             return;
         try {
             await API.post(endpoints.bulk_done, { ids: selectedIds });
+            const count = selectedIds.length;
             setSelectedIds([]);
             onRefresh();
+            toast.success(`${count} tasks marked as completed!`);
         } catch (error) {
             console.error(error);
-            alert("Failed.");
+            toast.error("Failed to mark tasks as done.");
         }
     };
 
@@ -48,8 +51,10 @@ export default function TaskList({
         if (!window.confirm(`Delete ${selectedIds.length} tasks?`)) return;
         try {
             await API.post(endpoints.bulk_delete, { ids: selectedIds });
+            const count = selectedIds.length;
             setSelectedIds([]);
             onRefresh();
+            toast.info(`${count} tasks deleted.`);
         } catch (error) {
             console.error(error);
             try {
@@ -58,10 +63,13 @@ export default function TaskList({
                         API.delete(`${endpoints.tasks}${id}/`)
                     )
                 );
+                const count = selectedIds.length;
                 setSelectedIds([]);
                 onRefresh();
+                toast.info(`${count} tasks deleted (via fallback).`);
             } catch (e) {
                 console.error(e);
+                toast.error("Bulk delete failed entirely.");
             }
         }
     };

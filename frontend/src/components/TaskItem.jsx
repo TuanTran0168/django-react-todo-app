@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TaskDetail from "./TaskDetail";
 import API from "../services/api";
 import { endpoints } from "../services/endpoints";
+import { toast } from "react-toastify";
 
 const formatDate = (dateString) => {
     if (!dateString) return "No date";
@@ -29,8 +30,10 @@ export default function TaskItem({
         try {
             await API.delete(`${endpoints.tasks}${task.id}/`);
             onRefresh();
+            toast.info(`Task "${task.title}" deleted.`); 
         } catch (error) {
             console.error(error);
+            toast.error("Could not delete task");
         }
     };
 
