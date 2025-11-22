@@ -3,13 +3,12 @@ import API from "../services/api";
 import { endpoints } from "../services/endpoints";
 import AddTaskForm from "../components/AddTaskForm";
 import TaskList from "../components/TaskList";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function TodoPage() {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [, setError] = useState(null);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
@@ -48,9 +47,11 @@ export default function TodoPage() {
                 setTasks(Array.isArray(data) ? data : []);
                 setTotalCount(Array.isArray(data) ? data.length : 0);
             }
-        } catch (err) {
-            console.error(err);
-            setError("Failed to fetch tasks");
+        } catch (error) {
+            console.error(error);            
+            if (error.response.status === 429 && error.response.data.detail) {
+                toast.error(error.response.data.detail);
+            }
         } finally {
             setLoading(false);
         }

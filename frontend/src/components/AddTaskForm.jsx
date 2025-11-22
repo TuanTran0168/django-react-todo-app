@@ -42,6 +42,10 @@ export default function AddTaskForm({ onTaskAdded }) {
         } catch (error) {
             console.error("Error adding task:", error.response.data);
             toast.error("Failed to add task");
+
+            if (error.response.status === 429 && error.response.data.detail) {
+                toast.error(error.response.data.detail);
+            }
         }
     };
 

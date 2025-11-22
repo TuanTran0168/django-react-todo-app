@@ -34,6 +34,10 @@ export default function TaskItem({
         } catch (error) {
             console.error(error);
             toast.error("Could not delete task");
+
+            if (error.response.status === 429 && error.response.data.detail) {
+                toast.error(error.response.data.detail);
+            }
         }
     };
 
