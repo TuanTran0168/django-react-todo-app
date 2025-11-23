@@ -6,6 +6,13 @@ The entire environment is configured to run smoothly using **Docker** and **Dock
 
 ---
 
+## 🌐 Production Links
+
+- **Backend Swagger UI:** [Todo App Swagger Backend](https://tuanhelloworld.pythonanywhere.com/api/swagger/)  
+- **Frontend (React app):** [Todo App Frontend](https://react-todo-app-omega.vercel.app/)
+
+---
+
 ## ⚙️ Requirements
 
 * Docker & Docker Compose  
